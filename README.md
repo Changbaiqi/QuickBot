@@ -7,3 +7,38 @@
 Hello，这里是基于CQHttp的正向WebSocket写的Java使用框架。
 
 >  目前处于开发阶段，功能还未完善~
+
+## 使用方式：
+
+1、其实和SpringBoot的使用方式差不多一样,首先在Main函数里面加上@EnableQuickBot注解，然后在main函数里面写上new QuickBotApplication(当前类的class);
+
+```java
+@EnableQuickBot
+public class Main {
+    public static void main(String[] args) {
+        new QuickBotApplication(Main.class);
+        System.out.println("Hello world!");
+    }
+}
+```
+
+2、之后就是基于当前类下使用注解，简单接收信息的使用方式如下：
+
+```java
+
+@BotListen
+public class QQBotListen {
+
+    @GroupListen
+    @EventFilter(isAt = true)
+    public Message botListen(GroupEvent groupEvent){
+        String message1 = groupEvent.getOriginalMessage().getMessage();
+        Message message = new Message.Builder()
+                .setMessage("发送信息测试")
+                .build();
+        return message;
+    }
+}
+
+```
+
