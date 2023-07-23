@@ -3,6 +3,8 @@ package com.cbq.quickbot.bot;
 import com.cbq.quickbot.annotation.BotListen;
 import com.cbq.quickbot.annotation.EnableQuickBot;
 import com.cbq.quickbot.entity.BeanClass;
+import com.cbq.quickbot.entity.Config;
+import com.cbq.quickbot.utils.ConfigUtil;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import jakarta.annotation.Resource;
 import lombok.Data;
@@ -18,6 +20,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class QuickBotApplication {
+
+    private Config config;
+
     private Class startClass;
 
     //用于存储扫描到的Bean的Class
@@ -70,6 +75,9 @@ public class QuickBotApplication {
         if(!isOpen(this.startClass))
             return;
 
+        //读取配置文件
+        this.config = ConfigUtil.getConfig(startClass ,"bot.json");
+
         //扫描Bean
         scannerBeanClass();
 
@@ -79,7 +87,7 @@ public class QuickBotApplication {
 //        }
         //创建连接
         cqClient = new CQClient.Builder()
-                .setURL("ws://localhost:8080")
+                .setURL("ws://"+config.getIp()+":"+config.getPort())
                 .application(this)
                 .build();
 

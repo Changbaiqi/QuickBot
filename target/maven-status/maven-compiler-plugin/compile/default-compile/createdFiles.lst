@@ -15,6 +15,8 @@ com\cbq\quickbot\bot\CQClient$Builder.class
 com\cbq\quickbot\config\ApplicationStartup.class
 com\cbq\quickbot\config\CommandLineRunnerImpl.class
 com\cbq\quickbot\annotation\QuickBotProperty.class
+com\cbq\quickbot\entity\Config.class
+com\cbq\quickbot\utils\IOUtil.class
 com\cbq\quickbot\bot\GroupEvent.class
 com\cbq\quickbot\config\CommandLineRunnerImpl$1.class
 com\cbq\quickbot\annotation\MsgFilter.class
@@ -34,6 +36,7 @@ com\cbq\quickbot\annotation\IP.class
 com\cbq\quickbot\handler\GroupEventHandler.class
 com\cbq\quickbot\annotation\EventFilter.class
 com\cbq\quickbot\annotation\GroupListen.class
+com\cbq\quickbot\entity\Config$ConfigBuilder.class
 com\cbq\quickbot\config\DefinitionRegistryPostProcessor.class
 com\cbq\quickbot\config\QuickBotAutoConfiguration.class
 com\cbq\quickbot\config\QuickbotProperties.class
