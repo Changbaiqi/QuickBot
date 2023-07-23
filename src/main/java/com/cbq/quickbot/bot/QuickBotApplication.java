@@ -110,9 +110,7 @@ public class QuickBotApplication {
                 ClassLoader classLoader = startClass.getClassLoader();
                 try {
                     String path = startClass.getPackageName().replace(".","\\");
-                    //ystem.out.println(path);
-                    //加载类
-                    //System.out.println(startClass.getSimpleName());
+
                     String classPath = absolutePath.substring(absolutePath.indexOf(path),f.getAbsolutePath().indexOf(".class")).replace("\\",".");
                     //System.out.println(classPath);
                     Class<?> aClass = classLoader.loadClass(classPath);

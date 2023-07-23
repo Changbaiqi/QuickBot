@@ -1,30 +1,49 @@
 package com.cbq.quickbot.entity;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
+import jakarta.annotation.Resource;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-@Data
 public class ReceiveMessage {
-    private String post_type;
-    private String meta_event_type;
-    private Long time;
-    private Long self_id;
-    private  String sub_type;
-    private String message;
+    private List<AT> atList;
+    private String textMessage;
 
-    private Long message_seq;
-    private Sender sender;
-    private Long message_id;
+    public List<AT> getAtList() {
+        return atList;
+    }
 
-    private Long group_id;
-    private Integer font;
-    private String raw_message;
-    private Long user_id;
-    private String anonymous;
+    public String getTextMessage() {
+        return textMessage;
+    }
 
-    private String message_type;
+    public static class Builder{
+        ReceiveMessage receiveMessage= new ReceiveMessage();
+
+        public Builder(){
+            receiveMessage.atList = new ArrayList<>();
+        }
+
+
+        public Builder turn(OriginalMessage originalMessage){
+            String message = originalMessage.getMessage();
+
+            //at信息转换
+            Pattern atPattern = Pattern.compile("\\[CQ:at,qq=([\\d]*)\\]");
+            Matcher atMatcher = atPattern.matcher(message);
+            while (atMatcher.find()){
+                String group = atMatcher.group(1);
+                receiveMessage.atList.add(new AT(Long.parseLong(group)));
+            }
+
+
+            return this;
+        }
+
+        public ReceiveMessage build(){
+            return receiveMessage;
+        }
+    }
 }

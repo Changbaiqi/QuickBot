@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EventFilter {
-    boolean isAt() default false;
+    boolean atBot() default false;
 }
