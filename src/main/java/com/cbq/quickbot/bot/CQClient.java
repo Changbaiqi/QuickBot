@@ -56,6 +56,7 @@ public class CQClient {
         @Override
         public void onFailure(@NotNull WebSocket webSocket, @NotNull Throwable t, @Nullable Response response) {
             //super.onFailure(webSocket, t, response);
+            System.out.format("\33[31;1m连接CQ失败...\33[0m%n");
         }
 
         @Override
@@ -80,6 +81,7 @@ public class CQClient {
             //super.onMessage(webSocket, text);
         }
 
+
         @Override
         public void onMessage(@NotNull WebSocket webSocket, @NotNull ByteString bytes) {
             //super.onMessage(webSocket, bytes);
@@ -88,6 +90,7 @@ public class CQClient {
         @Override
         public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
             //super.onOpen(webSocket, response);
+            System.out.format("\33[32;1m连接CQ成功...\33[0m%n");
         }
 
         public Builder setURL(String url){

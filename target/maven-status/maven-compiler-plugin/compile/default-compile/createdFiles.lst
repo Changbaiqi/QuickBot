@@ -1,6 +1,7 @@
 com\cbq\quickbot\service\QuickBotWebSocket.class
 com\cbq\quickbot\annotation\PersonListen.class
 com\cbq\quickbot\annotation\Port.class
+com\cbq\quickbot\bot\QuickBotApplication$1.class
 com\cbq\quickbot\bot\BotEvent.class
 com\cbq\quickbot\utils\AnnotationUtil.class
 com\cbq\quickbot\entity\OriginalMessage.class

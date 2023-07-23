@@ -5,11 +5,15 @@ import com.cbq.quickbot.annotation.EnableQuickBot;
 import com.cbq.quickbot.entity.BeanClass;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import jakarta.annotation.Resource;
+import lombok.Data;
 
 import java.beans.Introspector;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -24,9 +28,13 @@ public class QuickBotApplication {
 
 
     private CQClient cqClient;
-    public QuickBotApplication(Class startClass) {
+    QuickBotApplication(Class startClass,String[] args) {
         this.startClass = startClass;
         initBot();
+    }
+
+    public static QuickBotApplication run(Class startClass, String[] args){
+        return new QuickBotApplication(startClass,args);
     }
 
     /**
@@ -34,7 +42,7 @@ public class QuickBotApplication {
      * @param startClass 启动类Class
      * @return
      */
-    public boolean isOpen(Class startClass){
+    private boolean isOpen(Class startClass){
 
         if(startClass.isAnnotationPresent(EnableQuickBot.class)){
             return true;
@@ -45,7 +53,7 @@ public class QuickBotApplication {
     /**
      * 初始化Bot框架
      */
-    public void initBot(){
+    private void initBot(){
         System.out.println("""
                  ________  ___  ___  ___  ________  ___  __    ________  ________  _________  \s
                 |\\   __  \\|\\  \\|\\  \\|\\  \\|\\   ____\\|\\  \\|\\  \\ |\\   __  \\|\\   __  \\|\\___   ___\\\s
@@ -55,7 +63,7 @@ public class QuickBotApplication {
                    \\ \\_____  \\ \\_______\\ \\__\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\   \\ \\__\\
                     \\|___| \\__\\|_______|\\|__|\\|_______|\\|__| \\|__|\\|_______|\\|_______|    \\|__|
                           \\|__|                                                               \s
-                v1.0.0
+                (QuickBot v1.0.0-a1)
                 ----------------------------------------------------------------------------------------------------------------
                 """);
         //如果未开启Bot那么久不继续启动框架
@@ -75,15 +83,17 @@ public class QuickBotApplication {
                 .application(this)
                 .build();
 
-        //System.out.println("框架启动成功");
         //防止结束
-        while(true){}
+        Timer timer = new Timer(true);
+        timer.schedule(new TimerTask() {public void run() {}}, 0,5000);
+        //启动完毕提示
+        //System.out.format("\33[32;1mQuickBot启动完毕\33[0m%n");
     }
 
     /**
      * 扫描Bean的Class
      */
-    public void scannerBeanClass(){
+    private void scannerBeanClass(){
         String packageName = startClass.getPackageName();
         packageName = packageName.replace(".","/");
         //通过传进来的启动类获取类加载器
@@ -150,7 +160,7 @@ public class QuickBotApplication {
      * @param beanClass
      * @return
      */
-    public BeanClass createBean(String name,Class beanClass) {
+    private BeanClass createBean(String name,Class beanClass) {
         BeanClass beanClass1 = new BeanClass();
         beanClass1.setName(name);
         beanClass1.setBeanClass(beanClass);
@@ -167,11 +177,11 @@ public class QuickBotApplication {
     /**
      * 获取Bean
      */
-    public void getBean(){
+    private void getBean(){
 
     }
 
-    public ConcurrentMap<String, BeanClass> getClassMap() {
+    private ConcurrentMap<String, BeanClass> getClassMap() {
         return classMap;
     }
 
