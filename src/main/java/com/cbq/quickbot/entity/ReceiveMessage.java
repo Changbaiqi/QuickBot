@@ -8,8 +8,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ReceiveMessage {
+    private Long sendQQ;
     private List<AT> atList;
     private String textMessage;
+
+    public Long getSendQQ() {
+        return sendQQ;
+    }
 
     public List<AT> getAtList() {
         return atList;
@@ -29,6 +34,8 @@ public class ReceiveMessage {
 
         public Builder turn(OriginalMessage originalMessage){
             String message = originalMessage.getMessage();
+
+            receiveMessage.sendQQ = originalMessage.getUser_id();
 
             //at信息转换
             Pattern atPattern = Pattern.compile("\\[CQ:at,qq=([\\d]*)\\]");

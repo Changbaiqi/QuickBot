@@ -1,21 +1,31 @@
 package com.cbq.quickbot.entity;
 
+import java.util.List;
+
 public class Message {
-    private String text;
+    private StringBuffer messageBuffer;
+
 
     public String getText() {
-        return text;
+        return messageBuffer.toString();
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setMessageBuffer(StringBuffer messageBuffer) {
+        this.messageBuffer = messageBuffer;
     }
 
     public static class Builder{
         private Message message = new Message();
 
-        public Builder setMessage(String text){
-            this.message.text = text;
+        public Builder(){
+            message.messageBuffer = new StringBuffer();
+        }
+        public Builder at(AT at){
+            message.messageBuffer.append(at.getCQText());
+            return this;
+        }
+        public Builder text(String text){
+            message.messageBuffer.append(text);
             return this;
         }
         public Message build(){

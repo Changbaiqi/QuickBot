@@ -1,6 +1,7 @@
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\utils\AnnotationUtil.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\service\QuickBotService.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\bot\GroupEvent.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\AT.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\EventFilter.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\EnableQuickBot.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\config\CommandLineRunnerImpl.java
@@ -17,6 +18,7 @@ E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\config\QuickbotPro
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\config\DefinitionRegistryPostProcessor.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\Sender.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\MsgFilter.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\OriginalMessage.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\bot\BotEvent.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\Message.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\IP.java

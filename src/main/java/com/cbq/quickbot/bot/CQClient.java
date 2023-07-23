@@ -60,23 +60,23 @@ public class CQClient {
 
         @Override
         public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                //JSONObject jsonObject = JSONObject.parseObject(text);
-                Map<String,Object> jsonObject = objectMapper.readValue(text,Map.class);
-                //过滤不符合规范的数据
-                if(!jsonObject.containsKey("post_type"))
-                    return;
-                //过滤心跳包
-                if (jsonObject.get("post_type").equals("meta_message"))
-                    return;
-                //如果是群消息
-                if(jsonObject.get("post_type").equals("message") && jsonObject.get("message_type").equals("group")){
-                    new GroupEventHandler(text,application);
+                try {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    //JSONObject jsonObject = JSONObject.parseObject(text);
+                    Map<String,Object> jsonObject = objectMapper.readValue(text,Map.class);
+                    //过滤不符合规范的数据
+                    if(!jsonObject.containsKey("post_type"))
+                        return;
+                    //过滤心跳包
+                    if (jsonObject.get("post_type").equals("meta_message"))
+                        return;
+                    //如果是群消息
+                    if(jsonObject.get("post_type").equals("message") && jsonObject.get("message_type").equals("group")){
+                        new GroupEventHandler(text,application);
+                    }
+                }catch (Exception e){
+                    System.out.println(e);
                 }
-            }catch (Exception e){
-                System.out.println(e);
-            }
             //super.onMessage(webSocket, text);
         }
 
