@@ -3,6 +3,7 @@ com\cbq\quickbot\annotation\PersonListen.class
 com\cbq\quickbot\annotation\Port.class
 com\cbq\quickbot\bot\BotEvent.class
 com\cbq\quickbot\utils\AnnotationUtil.class
+com\cbq\quickbot\entity\OriginalMessage.class
 META-INF\spring-configuration-metadata.json
 com\cbq\quickbot\bot\Sender.class
 com\cbq\quickbot\entity\Message$Builder.class
@@ -16,8 +17,11 @@ com\cbq\quickbot\annotation\QuickBotProperty.class
 com\cbq\quickbot\bot\GroupEvent.class
 com\cbq\quickbot\config\CommandLineRunnerImpl$1.class
 com\cbq\quickbot\annotation\MsgFilter.class
+com\cbq\quickbot\bot\GroupEvent$Builder.class
 com\cbq\quickbot\annotation\BotListen.class
+com\cbq\quickbot\entity\ReceiveMessage$Builder.class
 com\cbq\quickbot\entity\ReceiveMessage.class
+com\cbq\quickbot\entity\AT.class
 com\cbq\quickbot\entity\Message.class
 com\cbq\quickbot\entity\Sender.class
 com\cbq\quickbot\bot\CQMessage.class

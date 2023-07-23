@@ -25,12 +25,19 @@ public class Main {
 2、之后就是基于当前类下使用注解，简单接收信息的使用方式如下：
 
 ```java
+package org.exm.controller;
+
+import com.cbq.quickbot.annotation.BotListen;
+import com.cbq.quickbot.annotation.EventFilter;
+import com.cbq.quickbot.annotation.GroupListen;
+import com.cbq.quickbot.bot.GroupEvent;
+import com.cbq.quickbot.entity.Message;
 
 @BotListen
 public class QQBotListen {
 
-    @GroupListen
-    @EventFilter(isAt = true)
+    @GroupListen(qqList = {784469488})
+    @EventFilter(atBot = true)
     public Message botListen(GroupEvent groupEvent){
         String message1 = groupEvent.getOriginalMessage().getMessage();
         Message message = new Message.Builder()
@@ -39,6 +46,7 @@ public class QQBotListen {
         return message;
     }
 }
+
 
 ```
 
