@@ -32,16 +32,17 @@ public class GroupEventHandler {
 
             //遍历获取次类中的方法，看是否带了群监听注解-------------------------------
             for (Method method : declaredMethods) {
+
                 //是否带有群监听-----------------
                 if (!method.isAnnotationPresent(GroupListen.class))
                     continue;
                 GroupListen groupListen = method.getAnnotation(GroupListen.class);
 
 
-                //是否带有群事件过滤器如果带，那么就加上去
+                //是否带有群事件过滤器如果带，那么就加上去--------------
                 if (method.isAnnotationPresent(EventFilter.class)) {
                     EventFilter eventFilter = method.getAnnotation(EventFilter.class);
-                    //是否开启了atBot
+                    //是否开启了atBot---------
                     boolean atBot = eventFilter.atBot();
                     if (atBot == true) {
                         boolean isFilter = true;
@@ -53,6 +54,18 @@ public class GroupEventHandler {
                         if (isFilter)
                             return;
                     }
+
+                    //是否含有正则匹配事件--------------------
+                    String rex = eventFilter.rex();
+                    if(rex!=""){
+                        boolean isFilter = true;
+                        if(groupEvent.getReceiveMessage().getTextMessage().contains(rex)){
+                            isFilter =false;
+                        }
+                        if(isFilter)
+                            return;
+                    }
+
                 }
 
 

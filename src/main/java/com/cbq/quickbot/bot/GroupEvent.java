@@ -10,6 +10,7 @@ import lombok.Data;
 import java.util.Map;
 
 public class GroupEvent {
+    private String jsonText;
     //接收的原始信息数据
     private OriginalMessage originalMessage;
     private ReceiveMessage receiveMessage;
@@ -22,6 +23,10 @@ public class GroupEvent {
         return receiveMessage;
     }
 
+    public String getJsonText() {
+        return jsonText;
+    }
+
     public static class Builder {
         GroupEvent groupEvent = null;
 
@@ -31,7 +36,7 @@ public class GroupEvent {
 
         public Builder jsonText(String jsonText) {
             ObjectMapper objectMapper = new ObjectMapper();
-
+            groupEvent.jsonText= jsonText;
             ///装载信息数据
             try {
                 OriginalMessage originalMessage = objectMapper.readValue(jsonText, OriginalMessage.class);

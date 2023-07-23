@@ -16,4 +16,8 @@ public class AT {
     public Long getQq() {
         return qq;
     }
+
+    public String getCQText(){
+        return "[CQ:at,qq="+qq+"] ";
+    }
 }

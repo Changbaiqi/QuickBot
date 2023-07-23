@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EventFilter {
     boolean atBot() default false;
+    String rex() default "";
 }

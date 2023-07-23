@@ -36,9 +36,10 @@ public class ReceiveMessage {
             while (atMatcher.find()){
                 String group = atMatcher.group(1);
                 receiveMessage.atList.add(new AT(Long.parseLong(group)));
+                message = message.replace("[CQ:at,qq="+group+"] ","");
             }
 
-
+            receiveMessage.textMessage = message;
             return this;
         }
 
