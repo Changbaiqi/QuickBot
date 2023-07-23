@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "quick.bot",
+      "type": "com.cbq.quickbot.config.QuickbotProperties",
+      "sourceType": "com.cbq.quickbot.config.QuickbotProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "quick.bot.port",
+      "type": "java.lang.Integer",
+      "sourceType": "com.cbq.quickbot.config.QuickbotProperties"
+    }
+  ],
+  "hints": []
+}
