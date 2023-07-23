@@ -32,21 +32,23 @@ import com.cbq.quickbot.annotation.EventFilter;
 import com.cbq.quickbot.annotation.GroupListen;
 import com.cbq.quickbot.bot.GroupEvent;
 import com.cbq.quickbot.entity.Message;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @BotListen
 public class QQBotListen {
 
-    @GroupListen(qqList = {784469488})
-    @EventFilter(atBot = true)
+    @GroupListen(qqList = {784469488,439329252,782620752}/*触发回复的群列表*/)
+    @EventFilter(atBot = true/*是否为at机器人才能触发*/,rex = "Hello"/*是否正则匹配，默认不写就是不触发正则匹配*/)
     public Message botListen(GroupEvent groupEvent){
-        String message1 = groupEvent.getOriginalMessage().getMessage();
+        log.info(groupEvent.getJsonText());
+        String message1 = groupEvent.getReceiveMessage().getTextMessage();
         Message message = new Message.Builder()
-                .setMessage("发送信息测试")
+                .setMessage("你发送的信息为："+message1)
                 .build();
         return message;
     }
 }
-
 
 ```
 
