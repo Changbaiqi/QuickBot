@@ -5,14 +5,15 @@ import com.cbq.quickbot.annotation.GroupListen;
 import com.cbq.quickbot.bot.GroupEvent;
 import com.cbq.quickbot.bot.QuickBotApplication;
 import com.cbq.quickbot.entity.AT;
-import com.cbq.quickbot.entity.GroupSpecialTitleOperation;
+import com.cbq.quickbot.entity.action.ActionSubmit;
+import com.cbq.quickbot.entity.action.GroupKickOperation;
+import com.cbq.quickbot.entity.action.GroupSpecialTitleOperation;
 import com.cbq.quickbot.entity.Message;
-import com.cbq.quickbot.entity.QQOperation;
+import com.cbq.quickbot.entity.action.QQOperation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -34,24 +35,24 @@ public class GroupEventHandler {
                 methods.add(declaredMethod);
             }
             //类中方法排序，方便后续的过滤登记标记
-            methods.sort((m1,m2)->{
-                int m1V =0;
-                int m2V =0;
-                if(m1.isAnnotationPresent(EventFilter.class)){
+            methods.sort((m1, m2) -> {
+                int m1V = 0;
+                int m2V = 0;
+                if (m1.isAnnotationPresent(EventFilter.class)) {
                     m1V = m1.getAnnotation(EventFilter.class).level();
                 }
-                if(m2.isAnnotationPresent(EventFilter.class)){
+                if (m2.isAnnotationPresent(EventFilter.class)) {
                     m2V = m2.getAnnotation(EventFilter.class).level();
                 }
-                return m2V-m1V;
+                return m2V - m1V;
             });
 
             //遍历获取次类中的方法，看是否带了群监听注解-------------------------------
             for (Method method : methods) {
                 int state = runMethed(application, value, groupEvent, method);
-                if(state==1)
+                if (state == 1)
                     continue;
-                else if (state==2)
+                else if (state == 2)
                     return;
             }
         });
@@ -59,18 +60,18 @@ public class GroupEventHandler {
 
     /**
      * 0代表正常请求，1代表continue，2代表return；
+     *
      * @param groupEvent
      * @param method
      * @return
      */
-    private int runMethed(QuickBotApplication application, Object clazzObject,GroupEvent groupEvent, Method method){
-        ObjectMapper objectMapper= new ObjectMapper();
+    private int runMethed(QuickBotApplication application, Object clazzObject, GroupEvent groupEvent, Method method) {
+        ObjectMapper objectMapper = new ObjectMapper();
 
         //是否带有群监听-----------------
         if (!method.isAnnotationPresent(GroupListen.class))
             return 1;
         GroupListen groupListen = method.getAnnotation(GroupListen.class);
-
 
 
         //获取监听的群
@@ -91,8 +92,6 @@ public class GroupEventHandler {
         }
 
 
-
-
         //发送信息前条件拦截，那么就加上去----------------------------------
         if (method.isAnnotationPresent(EventFilter.class)) {
             EventFilter eventFilter = method.getAnnotation(EventFilter.class);
@@ -100,7 +99,7 @@ public class GroupEventHandler {
             boolean atBot = eventFilter.atBot();
             if (atBot == true) {
                 boolean isFilter = true;
-                for (AT at:groupEvent.getReceiveMessage().getAtList()) {
+                for (AT at : groupEvent.getReceiveMessage().getAtList()) {
                     if (groupEvent.getOriginalMessage().getSelf_id().compareTo(at.getQq()) == 0) {
                         isFilter = false;
                     }
@@ -111,12 +110,12 @@ public class GroupEventHandler {
 
             //是否含有正则匹配事件--------------------
             String rex = eventFilter.rex();
-            if(rex!=""){
+            if (rex != "") {
                 boolean isFilter = true;
-                if(groupEvent.getReceiveMessage().getTextMessage().contains(rex)){
-                    isFilter =false;
+                if (groupEvent.getReceiveMessage().getTextMessage().contains(rex)) {
+                    isFilter = false;
                 }
-                if(isFilter)
+                if (isFilter)
                     return 1;
             }
 
@@ -124,10 +123,8 @@ public class GroupEventHandler {
         }
 
 
-
-
         //通过Bean调用方法执行------------------------------------------------
-        new Thread(()->{
+        new Thread(() -> {
             Object invoke = null;
             try {
                 //获取返回的对象信息
@@ -142,38 +139,38 @@ public class GroupEventHandler {
             //判断是否为Message信息，如果是Message信息那么我们就可以发送了------------------------
             if (invoke instanceof Message) {
                 Message message = (Message) invoke;
-                Map<String, Object> result = new HashMap<>();
-                result.put("action", "send_group_msg");
-                Map<String, Object> params = new HashMap<>();
-                params.put("group_id", groupEvent.getOriginalMessage().getGroup_id());
-                params.put("message", message.getText());
-                result.put("params", params);
-                //log.info("要发送的信息为：" + message.getText());
-                try {
-                    String resultJson = objectMapper.writeValueAsString(result);
-                    //log.info(resultJson);
-                    application.getCqClient().getWebSocket().send(resultJson);
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
+                ActionSubmit actionSubmit = new ActionSubmit.Builder()
+                        .setAciton("send_group_msg")
+                        .addParam("group_id", groupEvent.getOriginalMessage().getGroup_id())
+                        .addParam("message", message.getText())
+                        .build();
+                application.getCqClient().getWebSocket().send(actionSubmit.getJson());
+
                 List<QQOperation> operationList = message.getOperationList();
                 for (QQOperation qqOperation : operationList) {
+                    //设置群头衔事件判断---------------------------------------
                     if (qqOperation.getAction().equals("set_group_special_title")) {
-                        GroupSpecialTitleOperation groupSpecialTitleOperation =(GroupSpecialTitleOperation) qqOperation;
-                        Map<String,Object> actionResult = new HashMap<>();
-                        actionResult.put("action","set_group_special_title");
-                        Map<String,Object> actionParams = new HashMap<>();
-                        actionParams.put("group_id",groupSpecialTitleOperation.getGroup_id());
-                        actionParams.put("user_id",groupSpecialTitleOperation.getUser_id());
-                        actionParams.put("special_title", groupSpecialTitleOperation.getSpecial_title());
-                        actionParams.put("duration",groupSpecialTitleOperation.getDuration());
-                        actionResult.put("params",actionParams);
-                        try {
-                            String acitonResultJson = objectMapper.writeValueAsString(actionResult);
-                            application.getCqClient().getWebSocket().send(acitonResultJson);
-                        } catch (JsonProcessingException e) {
-                            throw new RuntimeException(e);
-                        }
+                        GroupSpecialTitleOperation groupSpecialTitleOperation = (GroupSpecialTitleOperation) qqOperation;
+                        ActionSubmit submit = new ActionSubmit.Builder()
+                                .setAciton("set_group_special_title")
+                                .addParam("group_id", groupSpecialTitleOperation.getGroup_id())
+                                .addParam("user_id", groupSpecialTitleOperation.getUser_id())
+                                .addParam("special_title", groupSpecialTitleOperation.getSpecial_title())
+                                .addParam("duration", groupSpecialTitleOperation.getDuration()).build();
+
+                        application.getCqClient().getWebSocket().send(submit.getJson());
+                    }
+
+                    //踢人---------------------
+                    if (qqOperation.getAction().equals("set_group_kick")) {
+                        GroupKickOperation groupSpecialTitleOperation = (GroupKickOperation) qqOperation;
+                        ActionSubmit submit = new ActionSubmit.Builder()
+                                .setAciton("set_group_kick")
+                                .addParam("group_id",groupSpecialTitleOperation.getGroup_id())
+                                .addParam("user_id",groupSpecialTitleOperation.getUser_id())
+                                .addParam("reject_add_request",groupSpecialTitleOperation.getReject_add_request())
+                                .build();
+                        application.getCqClient().getWebSocket().send(submit.getJson());
                     }
                 }
             }
@@ -184,7 +181,7 @@ public class GroupEventHandler {
         if (method.isAnnotationPresent(EventFilter.class)) {
             EventFilter eventFilter = method.getAnnotation(EventFilter.class);
             //判断是否事件截断
-            if(eventFilter.isCut()){
+            if (eventFilter.isCut()) {
                 return 2;
             }
         }

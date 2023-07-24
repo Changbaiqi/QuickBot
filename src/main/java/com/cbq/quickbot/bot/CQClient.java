@@ -4,6 +4,7 @@ package com.cbq.quickbot.bot;
 import com.alibaba.fastjson2.JSONObject;
 import com.cbq.quickbot.handler.GroupEventHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class CQClient {
     private OkHttpClient okHttpClient = new OkHttpClient();
     private WebSocket webSocket;
@@ -62,6 +64,7 @@ public class CQClient {
         @Override
         public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
                 try {
+                    log.info(text);
                     ObjectMapper objectMapper = new ObjectMapper();
                     //JSONObject jsonObject = JSONObject.parseObject(text);
                     Map<String,Object> jsonObject = objectMapper.readValue(text,Map.class);

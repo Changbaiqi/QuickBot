@@ -1,5 +1,7 @@
 package com.cbq.quickbot.entity;
 
+import com.cbq.quickbot.entity.action.QQOperation;
+
 import java.util.ArrayList;
 import java.util.List;
 

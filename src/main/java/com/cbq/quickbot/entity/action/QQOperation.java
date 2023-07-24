@@ -1,4 +1,4 @@
-package com.cbq.quickbot.entity;
+package com.cbq.quickbot.entity.action;
 
 public abstract class QQOperation {
     private String action;
