@@ -97,15 +97,8 @@ public class GroupEventHandler {
             EventFilter eventFilter = method.getAnnotation(EventFilter.class);
             //是否开启了atBot---------
             boolean atBot = eventFilter.atBot();
-            if (atBot == true) {
-                boolean isFilter = true;
-                for (AT at : groupEvent.getReceiveMessage().getAtList()) {
-                    if (groupEvent.getOriginalMessage().getSelf_id().compareTo(at.getQq()) == 0) {
-                        isFilter = false;
-                    }
-                }
-                if (isFilter)
-                    return 2;
+            if (atBot == true && !groupEvent.getReceiveMessage().getAtBot()) {
+                return 2;
             }
 
             //是否含有正则匹配事件--------------------
@@ -166,9 +159,9 @@ public class GroupEventHandler {
                         GroupKickOperation groupSpecialTitleOperation = (GroupKickOperation) qqOperation;
                         ActionSubmit submit = new ActionSubmit.Builder()
                                 .setAciton("set_group_kick")
-                                .addParam("group_id",groupSpecialTitleOperation.getGroup_id())
-                                .addParam("user_id",groupSpecialTitleOperation.getUser_id())
-                                .addParam("reject_add_request",groupSpecialTitleOperation.getReject_add_request())
+                                .addParam("group_id", groupSpecialTitleOperation.getGroup_id())
+                                .addParam("user_id", groupSpecialTitleOperation.getUser_id())
+                                .addParam("reject_add_request", groupSpecialTitleOperation.getReject_add_request())
                                 .build();
                         application.getCqClient().getWebSocket().send(submit.getJson());
                     }
