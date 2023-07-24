@@ -1,13 +1,20 @@
 package com.cbq.quickbot.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
+    //普通发送的信息
     private StringBuffer messageBuffer;
-
+    //QQ机器人的一些操作
+    List<QQOperation> operationList;
 
     public String getText() {
         return messageBuffer.toString();
+    }
+
+    public List<QQOperation> getOperationList() {
+        return operationList;
     }
 
     public void setMessageBuffer(StringBuffer messageBuffer) {
@@ -19,6 +26,7 @@ public class Message {
 
         public Builder(){
             message.messageBuffer = new StringBuffer();
+            message.operationList = new ArrayList<>();
         }
         public Builder at(AT at){
             message.messageBuffer.append(at.getCQText());
@@ -26,6 +34,10 @@ public class Message {
         }
         public Builder text(String text){
             message.messageBuffer.append(text);
+            return this;
+        }
+        public Builder addOperation(QQOperation operation){
+            message.operationList.add(operation);
             return this;
         }
         public Message build(){

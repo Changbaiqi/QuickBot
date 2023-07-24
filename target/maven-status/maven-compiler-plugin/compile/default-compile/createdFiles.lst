@@ -1,5 +1,6 @@
 com\cbq\quickbot\service\QuickBotWebSocket.class
 com\cbq\quickbot\annotation\PersonListen.class
+com\cbq\quickbot\entity\QQOperation.class
 com\cbq\quickbot\annotation\Port.class
 com\cbq\quickbot\bot\QuickBotApplication$1.class
 com\cbq\quickbot\bot\BotEvent.class
@@ -31,6 +32,7 @@ com\cbq\quickbot\bot\CQMessage.class
 com\cbq\quickbot\annotation\EnableQuickBot.class
 com\cbq\quickbot\annotation\QuickBotConfig.class
 com\cbq\quickbot\bot\QuickBotApplication.class
+com\cbq\quickbot\entity\GroupSpecialTitleOperation.class
 com\cbq\quickbot\entity\SenderDeserialize.class
 com\cbq\quickbot\annotation\IP.class
 com\cbq\quickbot\handler\GroupEventHandler.class
@@ -40,4 +42,5 @@ com\cbq\quickbot\entity\Config$ConfigBuilder.class
 com\cbq\quickbot\config\DefinitionRegistryPostProcessor.class
 com\cbq\quickbot\config\QuickBotAutoConfiguration.class
 com\cbq\quickbot\config\QuickbotProperties.class
+com\cbq\quickbot\entity\GroupSpecialTitleOperation$GroupSpecialTitleOperationBuilder.class
 com\cbq\quickbot\entity\BeanClass.class

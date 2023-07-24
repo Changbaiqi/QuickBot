@@ -20,6 +20,10 @@
 > - [x] 事件截断
 > - [x] 触发事件等级自定义
 
+## 群相关功能支持：
+
+> - [x] 群专属头衔设置
+
 ## 使用方式：
 
 1、其实和SpringBoot的使用方式差不多一样,首先在Main函数里面加上@EnableQuickBot注解，然后在main函数里面写上QuickBotApplication.run(Main.class, args);(当前类的class);

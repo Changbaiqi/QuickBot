@@ -9,11 +9,16 @@ import java.util.regex.Pattern;
 
 public class ReceiveMessage {
     private Long sendQQ;
+    private Long sendGroupQQ;
     private List<AT> atList;
     private String textMessage;
 
     public Long getSendQQ() {
         return sendQQ;
+    }
+
+    public Long getSendGroupQQ() {
+        return sendGroupQQ;
     }
 
     public List<AT> getAtList() {
@@ -36,6 +41,8 @@ public class ReceiveMessage {
             String message = originalMessage.getMessage();
 
             receiveMessage.sendQQ = originalMessage.getUser_id();
+
+            receiveMessage.sendGroupQQ = originalMessage.getGroup_id();
 
             //at信息转换
             Pattern atPattern = Pattern.compile("\\[CQ:at,qq=([\\d]*)\\]");

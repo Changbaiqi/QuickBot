@@ -5,7 +5,9 @@ import com.cbq.quickbot.annotation.GroupListen;
 import com.cbq.quickbot.bot.GroupEvent;
 import com.cbq.quickbot.bot.QuickBotApplication;
 import com.cbq.quickbot.entity.AT;
+import com.cbq.quickbot.entity.GroupSpecialTitleOperation;
 import com.cbq.quickbot.entity.Message;
+import com.cbq.quickbot.entity.QQOperation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 public class GroupEventHandler {
@@ -156,6 +155,26 @@ public class GroupEventHandler {
                     application.getCqClient().getWebSocket().send(resultJson);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
+                }
+                List<QQOperation> operationList = message.getOperationList();
+                for (QQOperation qqOperation : operationList) {
+                    if (qqOperation.getAction().equals("set_group_special_title")) {
+                        GroupSpecialTitleOperation groupSpecialTitleOperation =(GroupSpecialTitleOperation) qqOperation;
+                        Map<String,Object> actionResult = new HashMap<>();
+                        actionResult.put("action","set_group_special_title");
+                        Map<String,Object> actionParams = new HashMap<>();
+                        actionParams.put("group_id",groupSpecialTitleOperation.getGroup_id());
+                        actionParams.put("user_id",groupSpecialTitleOperation.getUser_id());
+                        actionParams.put("special_title", groupSpecialTitleOperation.getSpecial_title());
+                        actionParams.put("duration",groupSpecialTitleOperation.getDuration());
+                        actionResult.put("params",actionParams);
+                        try {
+                            String acitonResultJson = objectMapper.writeValueAsString(actionResult);
+                            application.getCqClient().getWebSocket().send(acitonResultJson);
+                        } catch (JsonProcessingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
             }
         }).start();
