@@ -21,14 +21,19 @@
 
 ## 使用方式：
 
-1、其实和SpringBoot的使用方式差不多一样,首先在Main函数里面加上@EnableQuickBot注解，然后在main函数里面写上new QuickBotApplication(当前类的class);
+1、其实和SpringBoot的使用方式差不多一样,首先在Main函数里面加上@EnableQuickBot注解，然后在main函数里面写上QuickBotApplication.run(Main.class, args);(当前类的class);
 
 ```java
+package org.exm;
+
+import com.cbq.quickbot.annotation.EnableQuickBot;
+import com.cbq.quickbot.bot.QuickBotApplication;
+
 @EnableQuickBot
 public class Main {
     public static void main(String[] args) {
-        new QuickBotApplication(Main.class);
-        System.out.println("Hello world!");
+        QuickBotApplication run = QuickBotApplication.run(Main.class, args);
+        //System.out.println("不堵塞这里");
     }
 }
 ```
