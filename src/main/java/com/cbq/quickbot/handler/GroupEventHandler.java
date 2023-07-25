@@ -1,5 +1,6 @@
 package com.cbq.quickbot.handler;
 
+import com.cbq.quickbot.annotation.BotListen;
 import com.cbq.quickbot.annotation.EventFilter;
 import com.cbq.quickbot.annotation.GroupListen;
 import com.cbq.quickbot.bot.GroupEvent;
@@ -29,8 +30,20 @@ public class GroupEventHandler {
         //构建群事件
         GroupEvent groupEvent = new GroupEvent.Builder().jsonText(jsonText).build();
 
+        List<Object> listenList = new ArrayList<>(application.getBotlistenMap().values());
+
+        //对类级别进行排序
+        listenList.sort((v1,v2)->{
+            BotListen botListen1 = v1.getClass().getAnnotation(BotListen.class);
+            BotListen botListen2 = v2.getClass().getAnnotation(BotListen.class);
+            return botListen2.level()-botListen1.level();
+        });
+
         //获取Application中的监听对象列表
-        application.getBotlistenMap().forEach((key, value) -> {
+
+        for (Object value : listenList) {
+            BotListen botListen = value.getClass().getAnnotation(BotListen.class);
+
             Method[] declaredMethods = value.getClass().getDeclaredMethods();
 
             ArrayList<Method> methods = new ArrayList<>();
@@ -51,29 +64,39 @@ public class GroupEventHandler {
             });
 
             //遍历获取次类中的方法，看是否带了群监听注解-------------------------------
+            int isRunSum = 0;//用于记录这个类中的事件是否至少有一个触发
             for (Method method : methods) {
-                int state = runMethod(application, value, groupEvent, method);
-                if (state == 1)
+                int[] state = runMethod(application, value, groupEvent, method);
+
+                //是否有触发事件
+                if(state[0]==1)
+                    isRunSum+=1;
+
+                if (state[1] == 1)
                     continue;
-                else if (state == 2)
-                    return;
+                else if (state[1] == 2)
+                    break;
             }
-        });
+
+            //监听类级别的截断器
+            if(isRunSum>0 && botListen.isCut())
+                return;
+        }
     }
 
     /**
-     * 0代表正常请求，1代表continue，2代表return；
+     * 0代表正常请求，1代表continue，2代表return；[表示是否有事件执行,表示执行状态]
      *
      * @param groupEvent
      * @param method
      * @return
      */
-    private int runMethod(QuickBotApplication application, Object clazzObject, GroupEvent groupEvent, Method method) {
+    private int[] runMethod(QuickBotApplication application, Object clazzObject, GroupEvent groupEvent, Method method) {
         ObjectMapper objectMapper = new ObjectMapper();
 
         //是否带有群监听-----------------
         if (!method.isAnnotationPresent(GroupListen.class))
-            return 1;
+            return new int[]{0,1};
         GroupListen groupListen = method.getAnnotation(GroupListen.class);
 
 
@@ -91,7 +114,7 @@ public class GroupEventHandler {
                 }
             }
             if (isFilter)
-                return 1;
+                return new int[]{0,1};
         }
 
 
@@ -114,14 +137,14 @@ public class GroupEventHandler {
                     }
                 }
                 if(isFilter)
-                    return 1;
+                    return new int[]{0,1};
             }
 
 
             //是否开启了atBot---------
             boolean atBot = eventFilter.atBot();
             if (atBot == true && !groupEvent.getReceiveMessage().getAtBot()) {
-                return 1;
+                return new int[]{0,1};
             }
 
             //是否含有正则匹配事件--------------------
@@ -132,7 +155,7 @@ public class GroupEventHandler {
                     isFilter = false;
                 }
                 if (isFilter)
-                    return 1;
+                    return new int[]{0,1};
             }
 
 
@@ -238,10 +261,10 @@ public class GroupEventHandler {
             EventFilter eventFilter = method.getAnnotation(EventFilter.class);
             //判断是否事件截断
             if (eventFilter.isCut()) {
-                return 2;
+                return new int[]{1,2};
             }
         }
 
-        return 0;
+        return new int[]{1,0};
     }
 }

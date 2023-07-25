@@ -66,6 +66,7 @@ com\cbq\quickbot\bot\QuickBotApplication.class
 com\cbq\quickbot\entity\action\GROUP.class
 com\cbq\quickbot\entity\SenderDeserialize.class
 com\cbq\quickbot\entity\action\GroupAddRequestOperation.class
+com\cbq\quickbot\entity\Poke.class
 com\cbq\quickbot\handler\GroupEventHandler.class
 com\cbq\quickbot\annotation\GroupListen.class
 com\cbq\quickbot\entity\action\SendGroupSignOperation$Builder.class

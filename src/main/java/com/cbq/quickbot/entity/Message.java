@@ -44,6 +44,15 @@ public class Message {
             return this;
         }
 
+        /**
+         * 戳一戳，注意，使用此操作文本信息将不能正常发送
+         * @param qq qq号
+         * @return
+         */
+        public Builder poke(Long qq){
+            message.messageBuffer.append(new Poke(qq).getCQText());
+            return this;
+        }
         public Builder text(String text){
             message.messageBuffer.append(text);
             return this;
