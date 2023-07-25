@@ -31,7 +31,7 @@
 > - [x] 回复功能
 > - [x] 群管理设置
 
-## 使用方式：
+## 使用预览：
 
 1、其实和SpringBoot的使用方式差不多一样,首先在Main函数里面加上@EnableQuickBot注解，然后在main函数里面写上QuickBotApplication.run(Main.class, args);(当前类的class);
 
