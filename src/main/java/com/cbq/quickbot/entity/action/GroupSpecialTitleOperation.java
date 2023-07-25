@@ -2,6 +2,12 @@ package com.cbq.quickbot.entity.action;
 
 import lombok.Builder;
 
+/**
+ * @description: 群修改头衔
+ * @author 长白崎
+ * @date 2023/7/25 0:49
+ * @version 1.0
+ */
 @Builder
 public class GroupSpecialTitleOperation extends QQOperation{
 

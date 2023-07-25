@@ -31,4 +31,10 @@ public @interface EventFilter {
      * @return
      */
     int level() default 0;
+
+    /**
+     * 触发QQ
+     * @return
+     */
+    long[] triggerQQ() default {};
 }

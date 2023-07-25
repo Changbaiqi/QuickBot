@@ -8,6 +8,7 @@ import java.util.List;
 public class Message {
     //普通发送的信息
     private StringBuffer messageBuffer;
+
     //QQ机器人的一些操作
     List<QQOperation> operationList;
 
@@ -34,6 +35,15 @@ public class Message {
             message.messageBuffer.append(at.getCQText());
             return this;
         }
+        public Builder reply(Long messageId){
+            message.messageBuffer.append(new Reply(messageId).getCQText());
+            return this;
+        }
+        public Builder reply(Reply reply){
+            message.messageBuffer.append(reply.getCQText());
+            return this;
+        }
+
         public Builder text(String text){
             message.messageBuffer.append(text);
             return this;

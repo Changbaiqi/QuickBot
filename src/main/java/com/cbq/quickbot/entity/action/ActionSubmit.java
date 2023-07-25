@@ -7,6 +7,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @description: 用于信息提交json格式规范化
+ * @author 长白崎
+ * @date 2023/7/25 0:47
+ * @version 1.0
+ */
 public class ActionSubmit {
     private String action;
     private Map<String,Object> params;

@@ -1,5 +1,11 @@
 package com.cbq.quickbot.entity.action;
 
+/**
+ * @description: 群踢人
+ * @author 长白崎
+ * @date 2023/7/25 0:48
+ * @version 1.0
+ */
 public class GroupKickOperation extends QQOperation{
     //群号
     private Long group_id;

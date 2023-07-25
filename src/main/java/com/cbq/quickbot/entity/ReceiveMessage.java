@@ -9,10 +9,13 @@ import java.util.regex.Pattern;
 
 public class ReceiveMessage {
     private Long botQQ;
+    private Long messageId;
     private Boolean isAtBot=false;
     private Long sendQQ;
     private Long sendGroupQQ;
+    private Reply reply;
     private List<AT> atList;
+    //private List<Msg>
     private String textMessage;
 
     public Long getSendQQ() {
@@ -33,6 +36,14 @@ public class ReceiveMessage {
 
     public Long getBotQQ() {
         return botQQ;
+    }
+
+    public Long getMessageId() {
+        return messageId;
+    }
+
+    public Reply getReply() {
+        return reply;
     }
 
     public Boolean getAtBot() {
@@ -63,7 +74,19 @@ public class ReceiveMessage {
             receiveMessage.botQQ = originalMessage.getSelf_id();
             receiveMessage.sendQQ = originalMessage.getUser_id();
             receiveMessage.sendGroupQQ = originalMessage.getGroup_id();
+            receiveMessage.messageId = originalMessage.getMessage_id();
 
+            //替换转换后的聊天
+            receiveMessage.textMessage = CQturn(message);
+            return this;
+        }
+
+        /**
+         * 用于CQ码的转换
+         * @param message
+         * @return
+         */
+        private String CQturn(String message){
             //at信息转换
             Pattern atPattern = Pattern.compile("\\[CQ:at,qq=([\\d]*)\\]");
             Matcher atMatcher = atPattern.matcher(message);
@@ -76,8 +99,23 @@ public class ReceiveMessage {
                 message = message.replace("[CQ:at,qq="+group+"] ","");
             }
 
-            receiveMessage.textMessage = message;
-            return this;
+            //回复引用信息转换----------------------------
+            Pattern replyPattern = Pattern.compile("\\[CQ:reply,id=([^\\]]*)\\]");
+            Matcher replyMatcher = replyPattern.matcher(message);
+            while (replyMatcher.find()){
+                String group = replyMatcher.group(1);
+                receiveMessage.reply = new Reply(Long.parseLong(group));
+                message = message.replace("[CQ:reply,id="+group+"] ","");
+            }
+
+            //匹配表情----------------------
+            Pattern facePattern = Pattern.compile("\\[CQ:face,id=([^\\]]*)\\]");
+            Matcher faceMatcher = facePattern.matcher(message);
+            while (faceMatcher.find()){
+                String group = faceMatcher.group(1);
+                message = message.replace("[CQ:face,id="+group+"] ","");
+            }
+            return message;
         }
 
         public ReceiveMessage build(){

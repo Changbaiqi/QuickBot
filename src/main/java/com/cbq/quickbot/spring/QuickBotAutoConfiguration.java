@@ -1,11 +1,6 @@
-package com.cbq.quickbot.config;
+package com.cbq.quickbot.spring;
 
 import com.cbq.quickbot.annotation.BotListen;
-import com.cbq.quickbot.service.QuickBotService;
-import com.cbq.quickbot.service.QuickBotWebSocket;
-import okhttp3.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;

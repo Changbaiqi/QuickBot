@@ -1,6 +1,6 @@
 package com.cbq.quickbot.annotation;
 
-import com.cbq.quickbot.config.QuickBotAutoConfiguration;
+import com.cbq.quickbot.spring.QuickBotAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

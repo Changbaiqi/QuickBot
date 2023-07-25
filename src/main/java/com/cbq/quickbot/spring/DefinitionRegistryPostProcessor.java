@@ -1,4 +1,4 @@
-package com.cbq.quickbot.config;
+package com.cbq.quickbot.spring;
 
 import com.cbq.quickbot.annotation.BotListen;
 import com.cbq.quickbot.annotation.GroupListen;

@@ -1,7 +1,5 @@
-package com.cbq.quickbot.config;
+package com.cbq.quickbot.spring;
 
-import com.cbq.quickbot.annotation.BotListen;
-import com.cbq.quickbot.service.QuickBotService;
 import com.cbq.quickbot.service.QuickBotWebSocket;
 import jakarta.annotation.Resource;
 import okhttp3.*;
@@ -11,10 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-
-import java.lang.annotation.Retention;
-import java.lang.reflect.Method;
-import java.util.Map;
 
 @Configuration
 @Component

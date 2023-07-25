@@ -1,7 +1,6 @@
 package com.cbq.quickbot.bot;
 
 
-import com.alibaba.fastjson2.JSONObject;
 import com.cbq.quickbot.handler.GroupEventHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +9,6 @@ import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -74,6 +72,10 @@ public class CQClient {
                     //过滤心跳包
                     if (jsonObject.get("post_type").equals("meta_message"))
                         return;
+                    //如果是请求类型
+                    if(jsonObject.get("post_type").equals("request")){
+                        new RequestLoad(text,application);
+                    }
                     //如果是群消息
                     if(jsonObject.get("post_type").equals("message") && jsonObject.get("message_type").equals("group")){
                         new GroupEventHandler(text,application);

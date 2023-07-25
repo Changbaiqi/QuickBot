@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.cbq.quickbot.config.QuickBotAutoConfiguration
+  com.cbq.quickbot.spring.QuickBotAutoConfiguration
