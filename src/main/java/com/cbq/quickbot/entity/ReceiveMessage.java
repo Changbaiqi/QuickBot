@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class ReceiveMessage {
     private Long botQQ;
     private Long messageId;
-    private Boolean isAtBot=false;
+    private Boolean isAtBot = false;
     private Long sendQQ;
     private Long sendGroupQQ;
     private Reply reply;
@@ -51,7 +51,7 @@ public class ReceiveMessage {
         return isAtBot;
     }
 
-    public void addRexStr(String rexStr){
+    public void addRexStr(String rexStr) {
         rexList.add(rexStr);
     }
 
@@ -61,23 +61,37 @@ public class ReceiveMessage {
 
     /**
      * 返回第一个AT
+     *
      * @return
      */
-    public AT getFistAt(){
-        if(atList.size()==0)
+    public AT getFistAt() {
+        if (atList.size() == 0)
             return null;
         else
-           return atList.get(0);
+            return atList.get(0);
     }
-    public static class Builder{
-        ReceiveMessage receiveMessage= new ReceiveMessage();
 
-        public Builder(){
+    public AT getNoBotFistAt(){
+        int i=0;
+        while(i<atList.size()){
+            if(atList.get(i).getQq().compareTo(botQQ)==0) {
+                ++i;
+                continue;
+            }
+            return atList.get(i);
+        }
+        return null;
+    }
+
+    public static class Builder {
+        ReceiveMessage receiveMessage = new ReceiveMessage();
+
+        public Builder() {
             receiveMessage.atList = new ArrayList<>();
         }
 
 
-        public Builder turn(OriginalMessage originalMessage){
+        public Builder turn(OriginalMessage originalMessage) {
             String message = originalMessage.getMessage();
 
             receiveMessage.botQQ = originalMessage.getSelf_id();
@@ -92,42 +106,43 @@ public class ReceiveMessage {
 
         /**
          * 用于CQ码的转换
+         *
          * @param message
          * @return
          */
-        private String CQturn(String message){
+        private String CQturn(String message) {
             //at信息转换
             Pattern atPattern = Pattern.compile("\\[CQ:at,qq=([\\d]*)\\]");
             Matcher atMatcher = atPattern.matcher(message);
-            while (atMatcher.find()){
+
+            while (atMatcher.find()) {
                 String group = atMatcher.group(1);
-                if(receiveMessage.botQQ.compareTo(Long.parseLong(group))!=0)
-                    receiveMessage.atList.add(new AT(Long.parseLong(group)));
-                else
+                receiveMessage.atList.add(new AT(Long.parseLong(group)));
+                if (receiveMessage.botQQ.compareTo(Long.parseLong(group)) == 0)
                     receiveMessage.isAtBot = true;
-                message = message.replaceFirst("\\[CQ:at,qq="+group+"\\][ ]?","");
+                message = message.replaceFirst("\\[CQ:at,qq=" + group + "\\][ ]?", "");
             }
 
             //回复引用信息转换----------------------------
             Pattern replyPattern = Pattern.compile("\\[CQ:reply,id=([^\\]]*)\\]");
             Matcher replyMatcher = replyPattern.matcher(message);
-            while (replyMatcher.find()){
+            while (replyMatcher.find()) {
                 String group = replyMatcher.group(1);
                 receiveMessage.reply = new Reply(Long.parseLong(group));
-                message = message.replace("[CQ:reply,id="+group+"]","");
+                message = message.replace("[CQ:reply,id=" + group + "]", "");
             }
 
             //匹配表情----------------------
             Pattern facePattern = Pattern.compile("\\[CQ:face,id=([^\\]]*)\\]");
             Matcher faceMatcher = facePattern.matcher(message);
-            while (faceMatcher.find()){
+            while (faceMatcher.find()) {
                 String group = faceMatcher.group(1);
-                message = message.replace("[CQ:face,id="+group+"]","");
+                message = message.replace("[CQ:face,id=" + group + "]", "");
             }
             return message;
         }
 
-        public ReceiveMessage build(){
+        public ReceiveMessage build() {
             return receiveMessage;
         }
     }
