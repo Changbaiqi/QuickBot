@@ -1,5 +1,6 @@
 package com.cbq.quickbot.entity.action;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.cbq.quickbot.bot.CQClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,18 +18,25 @@ public class ActionSubmit {
     private String action;
     private Map<String,Object> params;
 
-    public String getJson(){
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        try {
-            Map<String,Object> result = new HashMap<>();
-            result.put("action",action);
-            result.put("params",params);
-            return objectMapper.writeValueAsString(result);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public String getAction() {
+        return action;
     }
+
+    public Map<String, Object> getParams() {
+        return params;
+    }
+
+//    public String getJson(){
+//        ObjectMapper objectMapper = new ObjectMapper();
+//
+//        try {
+//            return objectMapper.writeValueAsString(this);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+//        //return JSONObject.toJSONString(result);
+//
+//    }
     public static class Builder{
         private ActionSubmit actionSubmit;
         public Builder(){

@@ -6,6 +6,7 @@ import com.cbq.quickbot.bot.GroupEvent;
 import com.cbq.quickbot.bot.QuickBotApplication;
 import com.cbq.quickbot.entity.Message;
 import com.cbq.quickbot.entity.action.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.lang.reflect.InvocationTargetException;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class MessageEventHandler {
     public MessageEventHandler(QuickBotApplication application,Object clazzObject,Object methodParam, Method method){
+        ObjectMapper objectMapper = new ObjectMapper();
 
         int state = runMethod(application,clazzObject, methodParam, method);
     }
@@ -61,7 +63,12 @@ public class MessageEventHandler {
                                 .addParam("special_title", groupSpecialTitleOperation.getSpecial_title())
                                 .addParam("duration", groupSpecialTitleOperation.getDuration()).build();
 
-                        application.getCqClient().getWebSocket().send(submit.getJson());
+                        try {
+                            String jsonSubmit = objectMapper.writeValueAsString(submit);
+                            application.getCqClient().getWebSocket().send(jsonSubmit);
+                        } catch (JsonProcessingException e) {
+                            throw new RuntimeException(e);
+                        }
                     }else
 
                         //踢人---------------------
@@ -73,7 +80,12 @@ public class MessageEventHandler {
                                     .addParam("user_id", groupSpecialTitleOperation.getUser_id())
                                     .addParam("reject_add_request", groupSpecialTitleOperation.getReject_add_request())
                                     .build();
-                            application.getCqClient().getWebSocket().send(submit.getJson());
+                            try {
+                                String jsonSubmit = objectMapper.writeValueAsString(submit);
+                                application.getCqClient().getWebSocket().send(jsonSubmit);
+                            } catch (JsonProcessingException e) {
+                                throw new RuntimeException(e);
+                            }
                         }else
 
                             //信息撤回----------------------
@@ -83,7 +95,12 @@ public class MessageEventHandler {
                                         .setAciton("delete_msg")
                                         .addParam("message_id",deleteMsgOperation.getMessage_id())
                                         .build();
-                                application.getCqClient().getWebSocket().send(submit.getJson());
+                                try {
+                                    String jsonSubmit = objectMapper.writeValueAsString(submit);
+                                    application.getCqClient().getWebSocket().send(jsonSubmit);
+                                } catch (JsonProcessingException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }else
                                 //群打卡
                                 if(qqOperation.getAction().equals("send_group_sign")){
@@ -92,7 +109,12 @@ public class MessageEventHandler {
                                             .setAciton(sendGroupSignOperation.getAction())
                                             .addParam("group_id",sendGroupSignOperation.getGroup_id())
                                             .build();
-                                    application.getCqClient().getWebSocket().send(submit.getJson());
+                                    try {
+                                        String jsonSubmit = objectMapper.writeValueAsString(submit);
+                                        application.getCqClient().getWebSocket().send(jsonSubmit);
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                 }else
                                     //群单人禁言
                                     if(qqOperation.getAction().equals("set_group_ban")){
@@ -103,7 +125,12 @@ public class MessageEventHandler {
                                                 .addParam("user_id",ban.getUser_id())
                                                 .addParam("duration",ban.getDuration())
                                                 .build();
-                                        application.getCqClient().getWebSocket().send(submit.getJson());
+                                        try {
+                                            String jsonSubmit = objectMapper.writeValueAsString(submit);
+                                            application.getCqClient().getWebSocket().send(jsonSubmit);
+                                        } catch (JsonProcessingException e) {
+                                            throw new RuntimeException(e);
+                                        }
                                     }else
                                         //群添加管理
                                     if(qqOperation.getAction().equals("set_group_admin")){
@@ -114,7 +141,12 @@ public class MessageEventHandler {
                                                 .addParam("user_id",admin.getUser_id())
                                                 .addParam("enable",admin.getEnable())
                                                 .build();
-                                        application.getCqClient().getWebSocket().send(submit.getJson());
+                                        try {
+                                            String jsonSubmit = objectMapper.writeValueAsString(submit);
+                                            application.getCqClient().getWebSocket().send(jsonSubmit);
+                                        } catch (JsonProcessingException e) {
+                                            throw new RuntimeException(e);
+                                        }
                                     }else
                                         //群要求或者加群请求
                                         if(qqOperation.getAction().equals("set_group_add_request")){
@@ -126,7 +158,12 @@ public class MessageEventHandler {
                                                     .addParam("approve",operation.getApprove())
                                                     .addParam("reason",operation.getReason())
                                                     .build();
-                                            application.getCqClient().getWebSocket().send(submit.getJson());
+                                            try {
+                                                String jsonSubmit = objectMapper.writeValueAsString(submit);
+                                                application.getCqClient().getWebSocket().send(jsonSubmit);
+                                            } catch (JsonProcessingException e) {
+                                                throw new RuntimeException(e);
+                                            }
                                         }
                 }
             }

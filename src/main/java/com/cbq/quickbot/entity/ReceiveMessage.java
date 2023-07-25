@@ -15,6 +15,7 @@ public class ReceiveMessage {
     private Long sendGroupQQ;
     private Reply reply;
     private List<AT> atList;
+    private List<String> rexList = new ArrayList<>();
     //private List<Msg>
     private String textMessage;
 
@@ -48,6 +49,14 @@ public class ReceiveMessage {
 
     public Boolean getAtBot() {
         return isAtBot;
+    }
+
+    public void addRexStr(String rexStr){
+        rexList.add(rexStr);
+    }
+
+    public List<String> getRexList() {
+        return rexList;
     }
 
     /**

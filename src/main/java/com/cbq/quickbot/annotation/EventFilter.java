@@ -1,5 +1,7 @@
 package com.cbq.quickbot.annotation;
 
+import com.cbq.quickbot.bot.BotEvent;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -18,7 +20,7 @@ public @interface EventFilter {
      * 正则匹配触发
      * @return
      */
-    String rex() default "";
+    Rex rex() default @Rex;
 
     /**
      * 是否截断事件触发，比如有与此事件拥有相同触发条件的事件，如果这个事件触发了那么久不会触发其他任何事件

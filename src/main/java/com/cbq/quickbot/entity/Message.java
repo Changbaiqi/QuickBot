@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Message {
     //普通发送的信息
-    private StringBuffer messageBuffer;
+    private List<MetaMessage> messageBuffer;
 
     //QQ机器人的一些操作
     List<QQOperation> operationList;
@@ -20,41 +20,61 @@ public class Message {
         return operationList;
     }
 
-    public void setMessageBuffer(StringBuffer messageBuffer) {
-        this.messageBuffer = messageBuffer;
+    public List<MetaMessage> getMessageBuffer() {
+        return messageBuffer;
     }
 
     public static class Builder{
         private Message message = new Message();
 
         public Builder(){
-            message.messageBuffer = new StringBuffer();
+            message.messageBuffer = new ArrayList<>();
             message.operationList = new ArrayList<>();
         }
         public Builder at(AT at){
-            message.messageBuffer.append(at.getCQText());
+            //message.messageBuffer.append(at.getCQText());
+            message.messageBuffer.add(
+                    new MetaMessage.Builder()
+                            .type("at")
+                            .addParam("qq",at.getQq()).build());
+            return this;
+        }
+        public Builder at(Long atQQ){
+            //message.messageBuffer.append(at.getCQText());
+            message.messageBuffer.add(
+                    new MetaMessage.Builder()
+                            .type("at")
+                            .addParam("qq",atQQ).build());
             return this;
         }
         public Builder reply(Long messageId){
-            message.messageBuffer.append(new Reply(messageId).getCQText());
+            //message.messageBuffer.append(new Reply(messageId).getCQText());
+            message.messageBuffer.add(
+                    new MetaMessage.Builder()
+                            .type("reply")
+                            .addParam("id",messageId)
+                            .build()
+            );
             return this;
         }
         public Builder reply(Reply reply){
-            message.messageBuffer.append(reply.getCQText());
+            //message.messageBuffer.append(reply.getCQText());
+            message.messageBuffer.add(
+                    new MetaMessage.Builder()
+                            .type("reply")
+                            .addParam("id",reply.getMessageId())
+                            .build()
+            );
             return this;
         }
 
-        /**
-         * 戳一戳，注意，使用此操作文本信息将不能正常发送
-         * @param qq qq号
-         * @return
-         */
-        public Builder poke(Long qq){
-            message.messageBuffer.append(new Poke(qq).getCQText());
-            return this;
-        }
         public Builder text(String text){
-            message.messageBuffer.append(text);
+            message.messageBuffer.add(
+                    new MetaMessage.Builder()
+                            .type("text")
+                            .addParam("text",text)
+                            .build()
+            );
             return this;
         }
         public Builder addOperation(QQOperation operation){
