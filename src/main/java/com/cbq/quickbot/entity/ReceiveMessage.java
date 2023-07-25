@@ -96,7 +96,7 @@ public class ReceiveMessage {
                     receiveMessage.atList.add(new AT(Long.parseLong(group)));
                 else
                     receiveMessage.isAtBot = true;
-                message = message.replace("[CQ:at,qq="+group+"] ","");
+                message = message.replaceFirst("\\[CQ:at,qq="+group+"\\][ ]?","");
             }
 
             //回复引用信息转换----------------------------

@@ -2,6 +2,7 @@ package com.cbq.quickbot.bot;
 
 
 import com.cbq.quickbot.handler.GroupEventHandler;
+import com.cbq.quickbot.handler.RequestHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -62,7 +63,7 @@ public class CQClient {
         @Override
         public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
                 try {
-                    log.info(text);
+
                     ObjectMapper objectMapper = new ObjectMapper();
                     //JSONObject jsonObject = JSONObject.parseObject(text);
                     Map<String,Object> jsonObject = objectMapper.readValue(text,Map.class);
@@ -70,11 +71,13 @@ public class CQClient {
                     if(!jsonObject.containsKey("post_type"))
                         return;
                     //过滤心跳包
-                    if (jsonObject.get("post_type").equals("meta_message"))
+                    if (jsonObject.get("post_type").equals("meta_event"))
                         return;
+                    //打印信息
+                    log.info(text);
                     //如果是请求类型
                     if(jsonObject.get("post_type").equals("request")){
-                        new RequestLoad(text,application);
+                        new RequestHandler(text,application);
                     }
                     //如果是群消息
                     if(jsonObject.get("post_type").equals("message") && jsonObject.get("message_type").equals("group")){

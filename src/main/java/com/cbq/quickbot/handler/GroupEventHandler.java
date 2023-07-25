@@ -52,7 +52,7 @@ public class GroupEventHandler {
 
             //遍历获取次类中的方法，看是否带了群监听注解-------------------------------
             for (Method method : methods) {
-                int state = runMethed(application, value, groupEvent, method);
+                int state = runMethod(application, value, groupEvent, method);
                 if (state == 1)
                     continue;
                 else if (state == 2)
@@ -68,7 +68,7 @@ public class GroupEventHandler {
      * @param method
      * @return
      */
-    private int runMethed(QuickBotApplication application, Object clazzObject, GroupEvent groupEvent, Method method) {
+    private int runMethod(QuickBotApplication application, Object clazzObject, GroupEvent groupEvent, Method method) {
         ObjectMapper objectMapper = new ObjectMapper();
 
         //是否带有群监听-----------------

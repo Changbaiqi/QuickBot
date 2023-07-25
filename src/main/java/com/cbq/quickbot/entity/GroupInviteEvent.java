@@ -1,7 +1,11 @@
 package com.cbq.quickbot.entity;
 
+import com.cbq.quickbot.entity.action.GroupAddRequestOperation;
+import com.cbq.quickbot.entity.action.GroupAdminOperation;
+
 public class GroupInviteEvent {
     private GroupRequest request;
+    private GroupAddRequestOperation.Builder groupAddRequestOperation;
 
     public GroupRequest getRequest() {
         return request;
@@ -11,7 +15,7 @@ public class GroupInviteEvent {
      * 同意入群
      */
     public void agree(){
-        
+
     }
 
     /**
@@ -19,6 +23,11 @@ public class GroupInviteEvent {
      */
     public void deny(){
 
+    }
+
+
+    public GroupAddRequestOperation.Builder getGroupAddRequestOperation() {
+        return groupAddRequestOperation;
     }
 
     public static class Builder{
@@ -33,6 +42,9 @@ public class GroupInviteEvent {
         }
 
         public GroupInviteEvent build(){
+            groupInviteEvent.groupAddRequestOperation = new GroupAddRequestOperation.Builder()
+                    .flag(groupInviteEvent.request.getFlag())
+                    .subType(groupInviteEvent.request.getSub_type());
             return groupInviteEvent;
         }
     }
