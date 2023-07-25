@@ -105,7 +105,7 @@ public class ReceiveMessage {
             while (replyMatcher.find()){
                 String group = replyMatcher.group(1);
                 receiveMessage.reply = new Reply(Long.parseLong(group));
-                message = message.replace("[CQ:reply,id="+group+"] ","");
+                message = message.replace("[CQ:reply,id="+group+"]","");
             }
 
             //匹配表情----------------------
@@ -113,7 +113,7 @@ public class ReceiveMessage {
             Matcher faceMatcher = facePattern.matcher(message);
             while (faceMatcher.find()){
                 String group = faceMatcher.group(1);
-                message = message.replace("[CQ:face,id="+group+"] ","");
+                message = message.replace("[CQ:face,id="+group+"]","");
             }
             return message;
         }
