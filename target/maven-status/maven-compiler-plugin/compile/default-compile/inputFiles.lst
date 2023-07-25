@@ -21,6 +21,8 @@ E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\Grou
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\CQCode.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\Poke.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\RequestGroupListen.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\Rex.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\PokeOperation.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\spring\ApplicationStartup.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\Face.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\Port.java
@@ -54,3 +56,4 @@ E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\bot\CQMessage.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\spring\QuickbotProperties.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\Config.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\bot\Sender.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\REXMODEL.java
