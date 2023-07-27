@@ -1,6 +1,7 @@
 com\cbq\quickbot\service\QuickBotWebSocket.class
 com\cbq\quickbot\entity\CQCode.class
 com\cbq\quickbot\annotation\RequestGroupListen.class
+com\cbq\quickbot\openai\OpenAISendMessage.class
 com\cbq\quickbot\annotation\Port.class
 com\cbq\quickbot\entity\action\SendGroupSignOperation.class
 com\cbq\quickbot\entity\action\GroupSpecialTitleOperation$GroupSpecialTitleOperationBuilder.class
@@ -10,7 +11,9 @@ com\cbq\quickbot\entity\OriginalMessage.class
 META-INF\spring-configuration-metadata.json
 com\cbq\quickbot\bot\Sender.class
 com\cbq\quickbot\bot\CQClient.class
+com\cbq\quickbot\openai\GPTAnswer$GPTAnswerBuilder.class
 com\cbq\quickbot\entity\action\GroupAddRequestOperation$Builder.class
+com\cbq\quickbot\openai\OpenAI$Builder.class
 com\cbq\quickbot\service\QuickBotService.class
 com\cbq\quickbot\bot\CQClient$Builder.class
 com\cbq\quickbot\annotation\QuickBotProperty.class
@@ -43,6 +46,7 @@ com\cbq\quickbot\entity\action\GroupBanOperation.class
 com\cbq\quickbot\utils\AnnotationUtil.class
 com\cbq\quickbot\entity\MetaMessage$Builder.class
 com\cbq\quickbot\entity\Message$Builder.class
+com\cbq\quickbot\openai\GPTAnswer.class
 com\cbq\quickbot\utils\ConfigUtil.class
 com\cbq\quickbot\entity\Reply.class
 com\cbq\quickbot\spring\DefinitionRegistryPostProcessor.class
@@ -50,9 +54,11 @@ com\cbq\quickbot\entity\action\GroupAdminOperation.class
 com\cbq\quickbot\entity\GroupRequest.class
 com\cbq\quickbot\entity\MetaMessage.class
 com\cbq\quickbot\entity\action\ActionSubmit.class
+com\cbq\quickbot\openai\PreGPTAnswer.class
 com\cbq\quickbot\entity\Config.class
 com\cbq\quickbot\spring\QuickbotProperties.class
 com\cbq\quickbot\bot\GroupEvent.class
+com\cbq\quickbot\openai\OpenAISendMessage$OpenAISendMessageBuilder.class
 com\cbq\quickbot\entity\action\REXMODEL.class
 com\cbq\quickbot\entity\GroupInviteEvent.class
 com\cbq\quickbot\annotation\MsgFilter.class
@@ -73,6 +79,7 @@ com\cbq\quickbot\entity\SenderDeserialize.class
 com\cbq\quickbot\entity\action\GroupAddRequestOperation.class
 com\cbq\quickbot\entity\Poke.class
 com\cbq\quickbot\handler\GroupEventHandler.class
+com\cbq\quickbot\openai\OpenAI.class
 com\cbq\quickbot\annotation\GroupListen.class
 com\cbq\quickbot\entity\action\SendGroupSignOperation$Builder.class
 com\cbq\quickbot\entity\Config$ConfigBuilder.class
