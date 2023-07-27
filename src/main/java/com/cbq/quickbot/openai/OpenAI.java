@@ -41,7 +41,7 @@ public class OpenAI {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");
-        //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
+
         RequestBody body = RequestBody.create(mediaType,JSONObject.toJSONString(openAISendMessage));
         Request request = new Request.Builder()
                 .url("https://ai.fakeopen.com/v1/chat/completions")
