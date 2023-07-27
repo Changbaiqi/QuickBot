@@ -17,6 +17,8 @@ public class CQClient {
     private OkHttpClient okHttpClient = new OkHttpClient();
     private WebSocket webSocket;
 
+    private Boolean recFlag = true;
+
     public OkHttpClient getOkHttpClient() {
         return okHttpClient;
     }
@@ -39,9 +41,24 @@ public class CQClient {
         private Request.Builder builder;
 
         public Builder(){
+            initializeWebSocket();
+        }
+
+        private void reconnect() {
+            // 断开后重新连接的逻辑
+            // 可以等待一段时间后重新调用 initializeWebSocket()
+            // 或者根据你的需求进行处理
+            build();
+        }
+
+        //初始化ws连接
+        private void initializeWebSocket() {
+            client.recFlag = true;
             client = new CQClient();
             builder = new Request.Builder();
-            client.setOkHttpClient(new OkHttpClient());
+            client.setOkHttpClient(new OkHttpClient.Builder()
+                    .addInterceptor(new RetryInterceptor(20,2000)).build());
+
         }
 
         @Override
@@ -57,7 +74,10 @@ public class CQClient {
         @Override
         public void onFailure(@NotNull WebSocket webSocket, @NotNull Throwable t, @Nullable Response response) {
             //super.onFailure(webSocket, t, response);
-            System.out.format("\33[31;1m连接CQ失败...\33[0m%n");
+            System.out.format("\33[31;1m连接CQ失败，正在尝试重连...\33[0m%n");
+            if(client.recFlag)
+                reconnect();
+            client.recFlag= false;
         }
 
         @Override

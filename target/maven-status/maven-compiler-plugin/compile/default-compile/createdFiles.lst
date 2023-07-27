@@ -81,6 +81,7 @@ com\cbq\quickbot\entity\Poke.class
 com\cbq\quickbot\handler\GroupEventHandler.class
 com\cbq\quickbot\openai\OpenAI.class
 com\cbq\quickbot\annotation\GroupListen.class
+com\cbq\quickbot\bot\RetryInterceptor.class
 com\cbq\quickbot\entity\action\SendGroupSignOperation$Builder.class
 com\cbq\quickbot\entity\Config$ConfigBuilder.class
 com\cbq\quickbot\entity\BeanClass.class
