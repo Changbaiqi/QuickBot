@@ -53,12 +53,11 @@ public class CQClient {
 
         //初始化ws连接
         private void initializeWebSocket() {
-            client.recFlag = true;
             client = new CQClient();
             builder = new Request.Builder();
             client.setOkHttpClient(new OkHttpClient.Builder()
                     .addInterceptor(new RetryInterceptor(20,2000)).build());
-
+            client.recFlag = true;
         }
 
         @Override

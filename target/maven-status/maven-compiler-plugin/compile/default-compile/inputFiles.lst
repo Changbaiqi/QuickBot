@@ -1,5 +1,6 @@
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\utils\AnnotationUtil.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\service\QuickBotService.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\openai\OpenAISendMessage.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\utils\IOUtil.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\handler\MessageEventHandler.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\EnableQuickBot.java
@@ -9,6 +10,7 @@ E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\utils\ConfigUtil.j
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\BotListen.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\Reply.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\Sender.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\openai\GPTAnswer.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\bot\BotEvent.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\ActionSubmit.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\IP.java
@@ -43,8 +45,10 @@ E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\GroupLi
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\DeleteMsgOperation.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\GroupKickOperation.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\SendGroupSignOperation.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\openai\OpenAI.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\annotation\MsgFilter.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\OriginalMessage.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\openai\PreGPTAnswer.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\GroupAddRequestOperation.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\Message.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\GroupAdminOperation.java
@@ -56,4 +60,5 @@ E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\bot\CQMessage.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\spring\QuickbotProperties.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\Config.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\bot\Sender.java
+E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\bot\RetryInterceptor.java
 E:\IntelliJ_WorkSpace\QuickBot\src\main\java\com\cbq\quickbot\entity\action\REXMODEL.java

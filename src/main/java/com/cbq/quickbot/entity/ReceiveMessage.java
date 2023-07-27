@@ -12,6 +12,7 @@ public class ReceiveMessage {
     private Long messageId;
     private Boolean isAtBot = false;
     private Long sendQQ;
+    private String role;
     private Long sendGroupQQ;
     private Reply reply;
     private List<AT> atList;
@@ -45,6 +46,10 @@ public class ReceiveMessage {
 
     public Reply getReply() {
         return reply;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public Boolean getAtBot() {
@@ -98,6 +103,7 @@ public class ReceiveMessage {
             receiveMessage.sendQQ = originalMessage.getUser_id();
             receiveMessage.sendGroupQQ = originalMessage.getGroup_id();
             receiveMessage.messageId = originalMessage.getMessage_id();
+            receiveMessage.role = originalMessage.getSender().getRole();
 
             //替换转换后的聊天
             receiveMessage.textMessage = CQturn(message);
