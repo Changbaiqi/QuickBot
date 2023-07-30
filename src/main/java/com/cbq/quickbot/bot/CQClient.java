@@ -2,6 +2,7 @@ package com.cbq.quickbot.bot;
 
 
 import com.cbq.quickbot.handler.GroupEventHandler;
+import com.cbq.quickbot.handler.PrivateEventHandler;
 import com.cbq.quickbot.handler.RequestHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -99,8 +100,11 @@ public class CQClient {
                         new RequestHandler(text,application);
                     }
                     //如果是群消息
-                    if(jsonObject.get("post_type").equals("message") && jsonObject.get("message_type").equals("group")){
-                        new GroupEventHandler(text,application);
+                    if(jsonObject.get("post_type").equals("message")){
+                        if(jsonObject.get("message_type").equals("group"))
+                            new GroupEventHandler(text,application);
+                        else if(jsonObject.get("message_type").equals("private"))
+                            new PrivateEventHandler(text,application);
                     }
                 }catch (Exception e){
                     System.out.println(e);

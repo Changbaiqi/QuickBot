@@ -5,15 +5,10 @@ import com.cbq.quickbot.annotation.EnableQuickBot;
 import com.cbq.quickbot.entity.BeanClass;
 import com.cbq.quickbot.entity.Config;
 import com.cbq.quickbot.utils.ConfigUtil;
-import com.fasterxml.jackson.databind.util.BeanUtil;
-import jakarta.annotation.Resource;
-import lombok.Data;
 
 import java.beans.Introspector;
 import java.io.File;
-import java.lang.annotation.Annotation;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,13 +26,16 @@ public class QuickBotApplication {
     //Bot监听对象
     private ConcurrentMap<String,Object> botlistenMap = new ConcurrentHashMap<>();
 
-
+    //CQ的连接器
     private CQClient cqClient;
+
+
     QuickBotApplication(Class startClass,String[] args) {
         this.startClass = startClass;
         initBot();
     }
 
+    //QuickBot，GOGOGGO！！！
     public static QuickBotApplication run(Class startClass, String[] args){
         return new QuickBotApplication(startClass,args);
     }
@@ -81,10 +79,7 @@ public class QuickBotApplication {
         //扫描Bean
         scannerBeanClass();
 
-//        for(String beanName : classMap.keySet()){
-//            //classMap.get(beanName);
-//            System.out.println("Beans》》"+beanName);
-//        }
+
         //创建连接
         cqClient = new CQClient.Builder()
                 .setURL("ws://"+config.getIp()+":"+config.getPort())
@@ -113,6 +108,13 @@ public class QuickBotApplication {
         scannerClass(file,startClass);
     }
 
+    /**
+     * 获取config对象
+     * @return
+     */
+    public Config getConfig() {
+        return config;
+    }
 
     /**
      * 扫描Class

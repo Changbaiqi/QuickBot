@@ -16,12 +16,9 @@ public class ConfigUtil {
 
         String configText = IOUtil.getResourceText(applicationClazz,configFilePath);
         try {
-            Map map = objectMapper.readValue(configText, Map.class);
+            Config config = objectMapper.readValue(configText, Config.class);
 
-            return Config.builder()
-                    .ip((String) map.get("ip"))
-                    .port((Integer) map.get("port"))
-                    .build();
+            return config;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

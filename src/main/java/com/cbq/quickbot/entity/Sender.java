@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 
 @Data
-@JsonDeserialize(using =  SenderDeserialize.class)
+//@JsonDeserialize(using =  SenderDeserialize.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Sender {
     private Integer age;

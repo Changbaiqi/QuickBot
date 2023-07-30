@@ -1,8 +1,10 @@
 package com.cbq.quickbot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OriginalMessage {
     private String post_type;
     private String meta_event_type;
@@ -22,4 +24,5 @@ public class OriginalMessage {
     private String anonymous;
 
     private String message_type;
+    private Long target_id;
 }
